@@ -27,7 +27,7 @@ void *philosopher(void *params)
 	int i;
 	params_t self = *(params_t *)params;
 
-	for(i = 0; i < 4; i++) {
+	while(1==1) {
 		think(self.position);
 
 		sem_wait(self.lock);
@@ -38,7 +38,7 @@ void *philosopher(void *params)
 		sem_post(&self.forks[(self.position + 1) % self.count]);
 		sem_post(self.lock);
 	}
-
+	
 	think(self.position);
 	pthread_exit(NULL);
 }
@@ -74,6 +74,7 @@ int main( int argc, char *argv[] )  {
 			pthread_create(&philosophers[i], NULL, philosopher, (void *)arg);
 		}
 		
+		pthread_exit(NULL);		
 	}else{
 		printf("Please pass 3 arguments.\n");
 	}
